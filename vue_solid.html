@@ -1,0 +1,191 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Plantilla</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://solid.github.io/solid-auth-client/dist/solid-auth-client.bundle.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+  </head>
+  	<body>
+      	<div id="appvue">
+        {{hacerAlgo}}
+            <div v-for="(a,i) in arreglo" :key="i"> 
+      		 <p v-bind:class="a">{{a}}</p>
+           <div v-if="a=='Ortuño'" >
+           {{i}}
+           </div>
+      	</div>
+         </div>
+         <div id="app">
+  <input v-model="text" placeholder="edit me">
+  <p>Text is: {{ text }}</p>
+</div>
+
+<div id="example-1">
+  <button v-on:click="counter += 1">Add 1</button>
+  <p>The button above has been clicked {{ counter }} times.</p>
+</div>
+
+<div id="example-2">
+  <!-- `greet` is the name of a method defined below -->
+  <button v-on:click="greet">Greet</button>
+</div>
+
+<div id="app8">
+  <!-- `greet` is the name of a method defined below -->
+  <button v-on:click="greet">Greet</button>
+</div>
+<div id="app6">
+  <!-- `greet` is the name of a method defined below -->
+  
+</div>
+
+
+
+
+    	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+      <script src="https://linkeddata.github.io/rdflib.js/dist/rdflib.min.js"></script>
+
+		<script type="text/javascript">
+       		// JS Code here
+       		const app = new Vue({
+        		el: '#appvue',
+
+        		data: {
+          			variable: 'STEAM!',
+          			numero:17,
+          			arreglo: ['Roth', 'Couto', 'Ortuño']
+        		},
+        		computed: {
+       				hacerAlgo() {
+            			return this.variable;
+          			}
+       			}
+      		});
+
+
+</script>
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    text: 'Good golly, Miss Molly'
+  }
+});
+
+var example1 = new Vue({
+  el: '#example-1',
+  data: {
+    counter: 0
+  }
+})
+
+
+
+var example2 = new Vue({
+  el: '#example-2',
+  data: {
+    name: 'Vue.js'
+  },
+  // define methods under the `methods` object
+  methods: {
+    greet: function (event) {
+      // `this` inside methods points to the Vue instance
+      alert('Hello ' + this.name + '!')
+      // `event` is the native DOM event
+      if (event) {
+        alert(event.target.tagName)
+      }
+    }
+  }
+})
+</script>
+
+<script>
+
+var app6 = new Vue({
+  el: '#app',
+  data: {
+    bookNameForTemplate: 'Getting to Know Vue.js',
+    bookNameForMethod: 'Getting to Know Vue.js',
+    bookNameForComputed: 'Getting to Know Vue.js',
+    publisher: 'Apress'
+  },
+  methods: {
+    getTitleBlurb: function() {
+      console.log('Called: getTitleBlurb');
+      return `${this.bookNameForMethod} by ${this.publisher}`;
+    }
+  },
+  computed: {
+    titleBlurb: function() {
+      console.log('Called: titleBlurb');
+      return `${this.bookNameForComputed} by ${this.publisher}`;
+    }
+  },
+  template: `
+    <div>
+        <h3>Template based:</h3>
+        <h4>{{bookNameForTemplate}} by {{publisher}}</h4>
+         <h3>Method based:</h3>
+         <h4>{{getTitleBlurb()}}</h4>
+         <h3>Computed Property based:</h3>
+         <h4>{{titleBlurb}}</h4>
+         <label>Template:
+  <input type="text" v-model="bookNameForTemplate" /></label>
+<br>
+<label>Method:
+<input type="text" v-model="bookNameForMethod" /></label>
+<br>
+<label>Computed:
+<input type="text" v-model="bookNameForComputed" /></label>
+         </div>
+
+    `
+});
+</script>
+<script>
+async function popupLogin() {
+  let session = await solid.auth.currentSession();
+  let popupUri = 'https://solid.community/common/popup.html';
+  if (!session)
+    session = await solid.auth.popupLogin({ popupUri });
+  alert(`Logged in as ${session.webId}`);
+}
+popupLogin();
+
+
+solid.auth.trackSession(session => {
+  if (!session)
+    console.log('The user is not logged in')
+  else
+    console.log(`The user is ${session.webId}`)
+})
+
+async function greetUser() {
+  const session = await solid.auth.currentSession();
+  if (!session)
+    alert('Hello stranger!');
+  else
+    alert(`Hello ${session.webId}!`);
+}
+greetUser();
+
+var store = $rdf.graph()
+var timeout = 5000 // 5000 ms timeout
+var fetcher = new $rdf.Fetcher(store, timeout)
+var url ="https://sgioma.solid.community/public/"
+
+fetcher.nowOrWhenFetched(url, function(ok, body, xhr) {
+    if (!ok) {
+        console.log("Oops, something happened and couldn't fetch data");
+    } else {
+        console.log(store)
+    }
+})
+</script>
+	</body>
+</html>
